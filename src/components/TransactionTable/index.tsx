@@ -1,25 +1,9 @@
-import { useContext, useEffect, useState } from "react";
-import { api } from "../../services/axios";
+import { useContext } from "react";
 import { TransactionsContext } from "../../TransactionsContext";
 import { Container } from "./styles";
 
-interface Transaction{
-    id: number;
-    title: string;
-    type: string;
-    amount: number;
-    category: string;
-    createdAt: string
-}
-
 export function TransactionTable(){
-    const [transactions, setTransactions] = useState<Transaction[]>([])
-    const data = useContext(TransactionsContext);
-
-    useEffect(() => {
-        api.get('transactions')
-        .then(({ data }) => setTransactions(data.transactions))
-    }, [])
+    const {transactions} = useContext(TransactionsContext);
 
     return(
         <Container>
