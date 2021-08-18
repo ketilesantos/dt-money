@@ -1,5 +1,6 @@
+import { useContext } from 'react'
 import {createContext, useEffect, useState} from 'react'
-import { api } from './services/axios'
+import { api } from '../services/axios'
 
 interface Transaction{
     id: number;
@@ -20,7 +21,7 @@ interface TransactionsContextData {
     createTransactions: (transactions: TransactionInput) => Promise<void>
 }
 
-export const TransactionsContext = createContext<TransactionsContextData>({} as TransactionsContextData)
+const TransactionsContext = createContext<TransactionsContextData>({} as TransactionsContextData)
 
 export function TransactionsProvider({children}: TransactionsProviderProps){
     const [transactions, setTransactions] = useState<Transaction[]>([])
@@ -42,4 +43,10 @@ export function TransactionsProvider({children}: TransactionsProviderProps){
             {children}
         </TransactionsContext.Provider>
     )
-}   
+} 
+
+export function useTransactions(){
+    const context = useContext(TransactionsContext);
+
+    return context;
+}
